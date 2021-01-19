@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>busquedas</title>
+     <!-- Bootstrap CSS -->
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <a class="navbar-brand" href="index.php" _msthash="1454479" _msttexthash="75387">Disident</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" _msthidden="A" _msthiddenattr="1375426" _mstaria-label="320099">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarColor02">
+    <ul class="navbar-nav mr-auto">
+
+      <li class="nav-item">
+        <a class="nav-link" href="productos.php" _msthash="574366" _msttexthash="136006">Mensajes</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="form.php" _msthash="574743" _msttexthash="95589">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="registro.php" _msthash="575120" _msttexthash="110331">Registro</a>
+      </li>
+    </ul>
+
+    <input type="text" id="cajaTexto" class="form-control" placeholder="españa" >
+    <button id="botonBusca" class="btn btn-primary my-5">Busca</button>
+  </div>
+</nav>
+
+<body>
+  <p id="resultado"> </p>
+   
+
+    <!--JS-->
+    <script>
+      document.getElementById('botonBusca').addEventListener('click',()=>{
+          const datoBuscar = document.getElementById('cajaTexto').value;
+          const url = 'http://loibra.duckdns.org/json.php'
+          fetch(url)
+              .then(dato => dato.json())
+              .then(dato => {
+                for(var i=0; i < dato.length; i++){
+                  if (dato[i].tag == datoBuscar) {
+                    console.log(` ${dato[i].tag} `);
+                    document.getElementById('resultado').innerHTML += `
+                    <div class="container embed-responsive embed-responsive-16by9">
+                    <h1>${dato[i].nombre}</h1>
+                    <p>${dato[i].resumen}</p>
+                    <video src="${dato[i].url}" preload="auto" controls autoplay poster="${dato[i].foto}" class="embed-responsive-item"></video>
+                    <p>${dato[i].tag}</p>
+                    </div>
+                    `
+                  }
+                  
+                  }
+                  })
+                
+              .catch(err => alert(err))
+
+      })
+  </script>
+
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <sscript src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></sscript>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="./js/main.js" type="module"></script>
+</body>
+
+</html>
